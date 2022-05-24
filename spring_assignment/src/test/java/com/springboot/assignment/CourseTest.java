@@ -36,7 +36,7 @@ public class CourseTest {
     @Test
     public void testFindByIdCourseExist(){
 
-        int id = 20;
+        int id = 1;
 
         Course course = repo.findById(id);
 
