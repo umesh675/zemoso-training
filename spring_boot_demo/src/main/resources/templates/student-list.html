@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
 
@@ -18,48 +18,64 @@
 
 <div class = "container">
 
-<h3>Student List</h3>
-<hr>
+    <h3>Student List</h3>
+    <hr>
 
-    <a th:href = "@{/student/showFormForAdd}"
-       class="btn btn-primary btn-sm mb-3">
-        Add Student
-    </a>
+    <div sec:authorize="hasRole('ADMIN')">
+        <a th:href = "@{/student/showFormForAdd}"
+           class="btn btn-primary btn-sm mb-3">
+            Add Student
+        </a>
+    </div>
 
-       <table class = "table table-bordered table-striped">
-           <thead class="thead-dark">
-              <tr>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Email</th>
-                  <th>Action</th>
-              </tr>
-           </thead>
+    <div th:if="${students.empty}">
+        <p>
+        <h6>Course List is Empty add course</h6>
+        </p>
+    </div>
 
-           <tbody>
-              <tr th:each = "student : ${students}">
+    <div th:if="${students.empty}">
+        <table class = "table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
 
-                  <td th:text= "${student.firstName}"/>
-                  <td th:text = "${student.lastName}"/>
-                  <td th:text = "${student.email}"/>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <th>Action</th>
+                </div>
 
-                  <td>
-                      <a th:href="@{/student/showFormForUpdate(studentId=${student.id})}"
-                      class="btn btn-info btn-sm">Update</a>
+            </tr>
+            </thead>
 
-                      <a th:href="@{/student/delete(studentId=${student.id})}"
-                         class="btn btn-info btn-sm"
-                         onclick="if(!(confirm('Are you sure you wanna delete the student?'))) return false">
-                          Delete</a>
+            <tbody>
 
-                  </td>
+            <tr th:each = "student : ${students}">
 
-              </tr>
-           </tbody>
-       </table>
+                <td th:text= "${student.firstName}"></td>
+                <td th:text = "${student.lastName}"></td>
+                <td th:text = "${student.email}"></td>
+
+                <div sec:authorize="hasRole('ADMIN')">
+                    <td>
+                        <a th:href="@{/student/showFormForUpdate(studentId=${student.id})}"
+                           class="btn btn-info btn-sm">Update</a>
+
+                        <a th:href="@{/student/delete(studentId=${student.id})}"
+                           class="btn btn-info btn-sm"
+                           onclick="if(!(confirm('Are you sure you wanna delete the student?'))) return false">
+                            Delete</a>
+
+                    </td>
+                </div>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
 </div>
-
-</form>
 
 <hr>
 <a th:href="@{/logout}"  class="btn btn-danger btn-sm"> LOGOUT</a>

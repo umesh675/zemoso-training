@@ -5,12 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -49,14 +47,6 @@ public @Data class Student {
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
     private List<Course> courses;
-
-    public void addCourse(Course course){
-
-        if(courses == null)
-            courses = new ArrayList<>();
-
-        courses.add(course);
-    }
 
     @Override
     public String toString() {

@@ -6,14 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -49,14 +45,6 @@ public @Data class Course {
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
     private List<Student> students;
-
-    public void addStudent(Student student){
-
-        if(students == null)
-            students = new ArrayList<>();
-
-        students.add(student);
-    }
 
     @Override
     public String toString() {

@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -74,13 +73,6 @@ public class StudentController {
         studentService.save(student);
 
         return "redirect:/student/list";
-    }
-
-    @PutMapping("/update")
-    public Student update(@RequestBody Student student){
-
-        studentService.update(student);
-        return student;
     }
 
     @GetMapping("/delete")

@@ -26,7 +26,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/course/**").hasRole("ADMIN")
+                .antMatchers("/course/showFormForAdd","/student/showFormForAdd",
+                        "/student/showFormForUpdate","/course/showFormForUpdate").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -35,6 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .defaultSuccessUrl("/")
                 .and()
                 .logout()
-                .permitAll();
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/access-denied");
     }
 }

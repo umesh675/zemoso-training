@@ -3,12 +3,10 @@ package com.springboot.assignment.service.course;
 import com.springboot.assignment.entity.Course;
 import com.springboot.assignment.repo.CourseRepo;
 import com.springboot.assignment.repo.StudentRepo;
-import com.springboot.assignment.service.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class CourseServiceImpl implements CourseService{
@@ -31,17 +29,15 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public void save(Course course) {
+    public Course save(Course course) {
 
-        course.setStudents(studentRepo.findAll());
-        courseRepo.save(course);
+        if(findById(course.getId()) == null){
+            course.setStudents(studentRepo.findAll());
+        }
+
+        return courseRepo.save(course);
     }
 
-    @Override
-    public void update(Course course) {
-
-        courseRepo.save(course);
-    }
 
     @Override
     public void deleteById(int id) {

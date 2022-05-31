@@ -1,0 +1,48 @@
+﻿.flexcontainer {
+    display: flex;
+    border: 2px solid grey;
+    align-content: flex-start;
+    height:fit-content;
+    flex-wrap:wrap;
+}
+
+.container {
+    background-image: url("frontpage.jpg");
+    flex-wrap:wrap;
+}
+
+.gridcontainer {
+    display: grid;
+    gap: 50px 100px;
+    grid-template-columns: auto;
+    background-color: #2196F3;
+    padding: 10px;
+}
+
+.item {
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.flexItem {
+
+    border: 2px solid grey;
+    margin: 12px;
+    text-align:center;
+}
+
+h1{
+    text-align: center;
+    color:aqua;
+    background-color:blueviolet;
+}
+
+img{
+    border-radius:8px;
+    height:400px;
+    width:400px;
+}
+
+body{
+    background-color:antiquewhite;
+}

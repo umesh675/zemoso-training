@@ -10,9 +10,7 @@ public interface StudentService {
 
     public List<Student> findAll();
 
-    public void save(Student student);
-
-    public void update(Student student);
+    public Student save(Student student);
 
     public void deleteById(int id);
 

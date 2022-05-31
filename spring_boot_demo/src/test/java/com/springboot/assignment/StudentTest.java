@@ -2,25 +2,28 @@ package com.springboot.assignment;
 
 import com.springboot.assignment.entity.Student;
 import com.springboot.assignment.repo.StudentRepo;
+import com.springboot.assignment.service.student.StudentService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import java.util.List;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
-
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@SpringBootTest
 public class StudentTest {
 
     @Autowired
-    private StudentRepo repo;
+    private StudentService service;
 
+    @MockBean
+    private StudentRepo repo;
 
     @Test
     public void addStudent(){
@@ -30,54 +33,44 @@ public class StudentTest {
                 .email("rajesh@gmail.com")
                 .build();
 
-        Student saveStudent = repo.save(student);
+        Mockito.when(repo.save(student)).thenReturn(student);
 
-        assertNotNull(saveStudent);
+        assertEquals(student,service.save(student));
     }
 
     @Test
-    public void testFindByIdStudentExist(){
+    public void testFindById(){
         int id = 1;
 
-        Student student = repo.findById(id);
-        assertNotNull(student);
+        Student student = Student.builder()
+                        .firstName("Ram").lastName("Chandra")
+                        .email("ram@gmail.com").build();
+
+        Mockito.when(repo.findById(id)).thenReturn(student);
+
+        assertEquals(student,service.findById(id));
 
     }
 
     @Test
-    public void testFindByIdStudentNotExist(){
+    public void testFindAll(){
 
-        int id = 20;
+        Mockito.when(repo.findAll()).thenReturn(Stream
+                .of(Student.builder()
+                        .firstName("Rajendra")
+                        .lastName("Kumar")
+                        .email("rajendra@gmail.com").build()).collect(Collectors.toList()));
 
-        Student student = repo.findById(id);
-
-        assertNull(student);
+        assertEquals(1,service.findAll().size());
     }
 
     @Test
-    public void testUpdateStudent(){
+    public void testDelete(){
 
-        int id = 1;
+        service.deleteById(1);
 
-        Student student = repo.findById(id);
-        student.setLastName("Shing");
-
-        Student updateStudent = repo.save(student);
-
-        String updatedLastName = updateStudent.getLastName();
-
-        Assertions.assertThat(updatedLastName).isEqualTo("Shing");
-
+        Mockito.verify(repo,Mockito.times(1)).deleteById(1);
     }
-
-    @Test
-    public void testStudentList(){
-
-        List<Student> students = repo.findAll();
-
-        Assertions.assertThat(students).hasSizeGreaterThanOrEqualTo(0);
-    }
-
 
 
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<HTML xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<HTML xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -20,11 +20,10 @@
 
 </p>
 
-<div sec:authorize="hasRole('ADMIN')">
-    <p>
-        <a th:href = "@{/course/list}">Go to Course List</a>
-    </p>
-</div>
+<p>
+    <a th:href = "@{/course/list}">Go to Course List</a>
+</p>
+
 
 </body>
 </HTML>

@@ -3,12 +3,9 @@ package com.springboot.assignment.service.student;
 import com.springboot.assignment.entity.Student;
 import com.springboot.assignment.repo.CourseRepo;
 import com.springboot.assignment.repo.StudentRepo;
-import com.springboot.assignment.service.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService{
@@ -27,58 +24,67 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public List<Student> findAll() {
+
         return studentRepo.findAll();
     }
 
     @Override
-    public void save(Student student) {
+    public Student save(Student student) {
 
         Student student1 = studentRepo.findById(student.getId());
 
-        if(student1 == null &&
-                studentRepo.findByFirstNameAndLastName(
-                        student.getFirstName(),student.getLastName()) != null){
+        if(student1 == null){
 
-            throw new RuntimeException("first name & last name both exist already");
+            checkValid(student.getFirstName(), student.getLastName());
+
+            student.setCourses(courseRepo.findAll());
         }
 
-        if(student1 != null){
-
-            String firstName = "";
-            String lastName = "";
-
-            if(!student1.getFirstName().equals(student.getFirstName()))
-                firstName = student.getFirstName();
-
-            if(!student1.getLastName().equals(student.getLastName())){
-                lastName = student.getLastName();
-            }
-
-            if(firstName == "" && lastName != ""){
-                firstName = student.getFirstName();
-            }
-            if(firstName != "" && lastName == "")
-                lastName = student.getLastName();
-
-            if(studentRepo.findByFirstNameAndLastName(firstName,lastName) != null)
-                throw new RuntimeException("First Name && last name both exist");
-
+        else{
+            checkUpdateValid(student);
         }
 
-
-        student.setCourses(courseRepo.findAll());
-        studentRepo.save(student);
+        return studentRepo.save(student);
     }
 
-    @Override
-    public void update(Student student) {
-        studentRepo.save(student);
-    }
 
     @Override
     public void deleteById(int id) {
 
         studentRepo.deleteById(id);
     }
+
+    public void checkUpdateValid(Student student){
+
+        Student student1 = studentRepo.findById(student.getId());
+
+        String firstName = "";
+        String lastName = "";
+
+        if(!student1.getFirstName().equals(student.getFirstName()))
+            firstName = student.getFirstName();
+
+        if(!student1.getLastName().equals(student.getLastName())){
+            lastName = student.getLastName();
+        }
+
+        if(firstName.equals("")&& !lastName.equals("")){
+            firstName = student.getFirstName();
+        }
+        if(!firstName.equals("") && lastName.equals(""))
+            lastName = student.getLastName();
+
+        checkValid(firstName, lastName);
+
+    }
+
+    public void checkValid(String firstName,String lastName){
+
+        if(studentRepo.findByFirstNameAndLastName(firstName,lastName) != null) {
+            throw new RuntimeException("First Name && last name both exist");
+        }
+    }
+
+
 
 }

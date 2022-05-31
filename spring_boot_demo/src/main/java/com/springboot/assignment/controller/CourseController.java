@@ -7,7 +7,6 @@ import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -78,12 +77,6 @@ public class CourseController {
         return "redirect:/course/list";
     }
 
-    @PutMapping("/update")
-    public Course update(@RequestBody Course course){
-
-        courseService.update(course);
-        return course;
-    }
 
     @GetMapping("/delete")
     public String delete(@RequestParam("courseId") int id , Model model){
