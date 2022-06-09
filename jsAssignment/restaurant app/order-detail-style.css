@@ -1,0 +1,23 @@
+﻿
+.modal-body {
+    background-color: lavenderblush;
+}
+
+.modal-content {
+    background-color: transparent;
+}
+
+.modal-header {
+    background-color: blue;
+    color: white;
+}
+
+
+.modal-dialog {
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: auto;
+}
+
