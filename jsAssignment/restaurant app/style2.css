@@ -1,0 +1,94 @@
+﻿body {
+    font-family: Arial;
+    background-color: #f6f6f6;
+}
+
+
+.split {
+    height: 100%;
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+
+.left {
+    left: 0;
+    width: 30%;
+}
+
+.right {
+    right: 0;
+    width: 70%;
+    border-left:1px solid black;
+}
+
+.centered {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display:flex;
+}
+
+#myInput1, #myInput2 {
+
+    font-size: 16px;
+    padding: 10px 40px 20px 10px;
+    margin-bottom: 12px;
+    width: 100%;
+    display:flex;
+}
+
+#tableUL {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#tableUL li {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 16px 40px 20px 10px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block
+}
+
+#tableUL li p button:hover:not(.header) {
+  background-color: #eee;
+}
+
+p{
+    font-size:12px;
+}
+
+button, a {
+    text-decoration: none;
+    color: black;
+}
+
+#menuUL {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#menuUL li {
+    border: 1px solid #ddd;
+    margin-top: -1px; /* Prevent double borders */
+    background-color: #f6f6f6;
+    padding: 16px 40px 50px 10px;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    display: block
+}
+
+#menuUL li p a:hover:not(.header) {
+    background-color: #eee;
+}
